@@ -21,7 +21,6 @@ import streamlit as st
 import expense_db as db
 import model_connector as connector  # change this name if your file is named differently
 import os
-os.environ["GROQ_API_KEY"] = st.secrets["api_key"].strip()
 logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger(__name__)
 

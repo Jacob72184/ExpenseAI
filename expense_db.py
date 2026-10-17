@@ -354,6 +354,39 @@ def add_expense(user_id, amount, category, description="", spent_on=None):
         return _fail("Unknown user. Please sign in again.")
     except _DB_ERRORS as exc:
         return _database_error("saving the expense", exc)
+def delete_expense(user_id, amount,category,spent_on=None):
+    error = _check_user(user_id)
+    if error:
+        return _fail(error)
+    
+        # bool is a subclass of int in Python, so reject it explicitly
+    if isinstance(amount, bool) or not isinstance(amount, (int, float)):
+            return _fail("Amount must be a number.")
+    if not math.isfinite(amount) or amount <= 0:
+            return _fail("Amount must be a positive number.")
+    if round(amount, 2) <= 0:  # the column stores 2 decimal places
+            return _fail("Amount must be at least 0.01.")
+    
+    if not isinstance(category, str) or not category.strip():
+            return _fail("Category is required.")
+    category = category.lower().strip()
+    spent_on = spent_on or date.today().isoformat()
+    error = _check_date(spent_on, "spent_on")
+    if error:
+        return _fail(error)
+    
+    try:
+        with _conn() as conn:
+            row = conn.execute("DELETE FROM expenses WHERE user_id = %s AND amount=%s AND category=%s AND spent_on=%s ",
+                    (user_id,amount,category, spent_on))
+            return _ok("Succesfully deleted expense!")
+    except psycopg.errors.ForeignKeyViolation:
+                # user_id isn't in the users table
+                logger.warning("Rejected expense for unknown user_id=%s", user_id)      
+                return _fail("Unknown user. Please sign in again.")
+
+        
+#def rename_category():
 
 
 def get_expenses(user_id, category=None, start_date=None, end_date=None, limit=100):

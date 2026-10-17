@@ -53,6 +53,17 @@ class ModelUnavailable(Exception):
 #    Note there is NO user_id here. The model never chooses who the user is.
 # ---------------------------------------------------------------
 TOOLS = [
+    {"type": "function",
+     "function":{"name":"delete_expense",
+                 "description":"Delete the expense with the specified date",
+                 "parameters":{"type":"object",
+                               "properties":{"amount":{"type":"number","description":"positive amount spent."},
+                                             "category": {"type": "string", "description": "e.g. food, transport, rent."},
+                                             "spent_on": {"type": "string","description": "Date as YYYY-MM-DD. Omit for today."},
+                                              "user_id": {"type": "integer", "description":"integer id of the user to uniquely identify the user"}}
+                                              }
+                            }
+    },
     {
         "type": "function",
         "function": {
@@ -121,6 +132,13 @@ def run_tool(name, raw_arguments, user_id):
         return {"ok": False, "error": "Tool arguments must be a JSON object."}
 
     try:
+        if name == "delete_expense":
+            return db.delete_expense(
+                user_id,
+                args.get("amount"),
+                args.get("category"),
+                args.get("spent_on")
+            )
         if name == "add_expense":
             return db.add_expense(
                 user_id,

@@ -1,9 +1,10 @@
 # Expense Assistant (organization edition)
 
 ## What this is
-Streamlit app. Employees submit expenses by chat and get AI pre-check advice against
-their organization's policy (RAG). Managers approve or reject. Auditors query records
-read-only. A PERSON makes every approval decision; the AI only advises.
+Streamlit app. Employees add expenses by chat or by a form (category, amount, date,
+note) and get AI pre-check advice against their organization's policy (RAG). Managers
+approve or reject. Auditors query records read-only. A PERSON makes every approval
+decision; the AI only advises.
 
 ## Stack
 Python 3.12, Streamlit (st.login with Google OIDC), PostgreSQL on Neon via psycopg 3 +

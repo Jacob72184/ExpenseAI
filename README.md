@@ -1,10 +1,16 @@
 # Expense Assistant (multi-organization edition)
 
+<<<<<<< HEAD
 A multi-organization expense tracking and audit app. Employees submit expenses by chat
 or with one-click quick-add buttons and receive AI pre-check advice against their
 organization's policy. Managers approve or reject. Finance admins mark reimbursed and
 upload policy documents. Auditors query records read-only with RAG-assisted policy
 review. A PERSON makes every approval decision; the AI only advises.
+=======
+A web app where you track your spending by chatting. Type "I spent 200 on
+lunch yesterday" or "how much did I spend on food this month?" and an AI model
+records the expense or looks up the answer. You can ask about your expenses in natural language. 
+>>>>>>> 9c676ebdac57e49f60bb820e11ec84eb67e1dd2e
 
 ## What changed vs. the personal tracker
 
